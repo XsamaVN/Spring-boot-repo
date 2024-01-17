@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<a href="/categories">List Category</a><br>
+<a href="/products/create">add</a><br>
+<a href="/products/search-soft">sort</a><br>
+<a href="/products/search-soft-desc">sort DESC</a>
+
+<form action="/products/search">
+    <input type="text" name="search">
+    <button>search</button>
+</form>
+
+<form action="/products/searchByPrice">
+    <input type="number" name="start">
+    <input type="number" name="end">
+    <button>search by price between</button>
+</form>
+
+<table style="border: solid 1px">
+
+    <tr>
+        <th>Count</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+
+    </tr>
+
+    <div th:each="item, count : ${page}">
+        <tr>
+            <!--      <td th:t="${item.id}"></td>-->
+            <td th:text="${count.count}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.getCategory().getName()}"></td>
+
+            <td><a th:href="@{/products/edit/__${item.id}__}">Edit</a></td>
+            <td><a th:href="@{/products/delete/__${item.id}__}">Delete</a></td>
+        </tr>
+    </div>
+    <div class="pagination">
+        <span>Page <span th:text="${page.number + 1}"></span> of <span th:text="${page.totalPages}"></span>.</span>
+        <span th:if="${page.hasPrevious()}">
+        <a th:href="@{/products?page=__${page.number - 1}__&size=__${page.size}__}">previous</a>
+    </span>
+        <span th:if="${page.hasNext()}">
+        <a th:href="@{/products?page=__${page.number + 1}__&size=__${page.size}__}">next</a>
+    </span>
+    </div>
+</table>
+</body>
+</html>

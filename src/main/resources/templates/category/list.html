@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<a href="/products">List Product</a>
+<a href="/categories/create">add</a>
+<form action="/search">
+    <input type="text" name="search">
+    <button>search</button>
+</form>
+<table style="border: solid 1px">
+
+    <tr>
+        <th>Count</th>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+
+    </tr>
+    <div  th:each="item, count : ${list}" >
+        <tr>
+            <!--      <td th:t="${item.id}"></td>-->
+            <td th:text="${count.count}"></td>
+            <td th:text="${item.name}"></td>
+            <td><a th:href="@{/categories/edit/__${item.id}__}">Edit</a></td>
+            <td><a th:href="@{/categories/delete/__${item.id}__}">Delete</a></td>
+        </tr>
+    </div>
+</table>
+</body>
+</html>
